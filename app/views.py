@@ -1,5 +1,5 @@
-import models
-from serializers import TransactionSerializer, WalletSerializer
+from app import models
+from app.serializers import TransactionSerializer, WalletSerializer
 from rest_framework import viewsets
 
 

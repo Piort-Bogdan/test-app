@@ -1,6 +1,6 @@
 from rest_framework_json_api import serializers
 
-import models
+from app import models
 
 
 class TransactionSerializer(serializers.ModelSerializer):

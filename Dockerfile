@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Set the working directory
 WORKDIR /app
-COPY . /app
+COPY . .
 
 RUN apt-get update && apt-get install -y pkg-config python3-dev default-libmysqlclient-dev build-essential
 
