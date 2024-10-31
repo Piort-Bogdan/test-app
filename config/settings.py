@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_json_api',
     'django_filters',
     'drf_spectacular',
+    'rest_framework.authtoken',
 
 
     'app',
@@ -89,11 +90,11 @@ DATABASES = {
         'PASSWORD': os.environ.get('MYSQL_ROOT_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
 }
 
 
@@ -140,6 +141,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 5,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
@@ -171,5 +175,5 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Wallet-test-project',
     'DESCRIPTION': 'Test Wallet project',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False
+    'SERVE_INCLUDE_SCHEMA': False,
 }
