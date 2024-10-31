@@ -1,6 +1,5 @@
 from django.core.validators import MinValueValidator
-from django.db import models, transaction
-from django.db.models import Sum
+from django.db import models
 
 
 class Transaction(models.Model):

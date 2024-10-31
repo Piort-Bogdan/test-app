@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework.schemas import get_schema_view
 
 from app.urls import router
+from config.schema import MySchemaGenerator
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +29,14 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v1/documentation/', SpectacularSwaggerView.as_view(url_name='schema'), name='api-documentation'),
     path('api/v1/', include(router.urls)),
+    path('openapi', get_schema_view(
+            title="Example API",
+            description="API for all things …",
+            version="1.0.0",
+            generator_class=MySchemaGenerator,
+        ), name='openapi-schema'),
+    path('swagger-ui/', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url': 'openapi-schema'}
+    ), name='swagger-ui'),
 ]

@@ -72,5 +72,3 @@ class TestTransaction(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(models.Transaction.objects.count(), 0)
-
-

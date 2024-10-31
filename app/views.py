@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework.authtoken.models import Token
 from rest_framework.filters import SearchFilter
 from rest_framework.views import APIView
@@ -8,6 +8,7 @@ from rest_framework_json_api import filters, django_filters
 from app import models
 from app.serializers import TransactionSerializer, WalletSerializer
 from rest_framework import viewsets, permissions, status
+
 
 @extend_schema(
     tags=['Auth'],
@@ -27,16 +28,19 @@ class CustomAuthToken(APIView):
         }, status=status.HTTP_200_OK)
 
 
-@extend_schema(
+@extend_schema_view(
+    update=extend_schema(exclude=True),
+    partial_update=extend_schema(exclude=True),
     tags=['Transactions'],
     request=TransactionSerializer,
     responses={201: TransactionSerializer},
     methods=['GET', 'POST', 'DELETE'],
+    exclude_methods=['PUT', 'PATCH'],
     )
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = models.Transaction.objects.all()
     serializer_class = TransactionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = (filters.QueryParameterValidationFilter, filters.OrderingFilter,
                        django_filters.DjangoFilterBackend, SearchFilter)
     filterset_fields = {
@@ -53,7 +57,9 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 
-@extend_schema(
+@extend_schema_view(
+    update=extend_schema(exclude=True),
+    partial_update=extend_schema(exclude=True),
     tags=['Wallets'],
     request=TransactionSerializer,
     responses={201: TransactionSerializer},
@@ -62,7 +68,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
 class WalletViewSet(viewsets.ModelViewSet):
     queryset = models.Wallet.objects.all()
     serializer_class = WalletSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = (filters.QueryParameterValidationFilter, filters.OrderingFilter,
                        django_filters.DjangoFilterBackend, SearchFilter)
     filterset_fields = {
