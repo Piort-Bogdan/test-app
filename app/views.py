@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from drf_spectacular.utils import extend_schema
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.filters import SearchFilter
 from rest_framework.views import APIView
 from rest_framework_json_api import filters, django_filters
