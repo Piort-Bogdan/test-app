@@ -12,3 +12,5 @@ RUN apt-get update && apt-get install -y pkg-config python3-dev default-libmysql
 # Install dependencies
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+RUN flake8 .
+
