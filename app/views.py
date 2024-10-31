@@ -28,14 +28,11 @@ class CustomAuthToken(APIView):
         }, status=status.HTTP_200_OK)
 
 
-@extend_schema_view(
-    update=extend_schema(exclude=True),
-    partial_update=extend_schema(exclude=True),
+@extend_schema(
     tags=['Transactions'],
     request=TransactionSerializer,
     responses={201: TransactionSerializer},
     methods=['GET', 'POST', 'DELETE'],
-    exclude_methods=['PUT', 'PATCH'],
     )
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = models.Transaction.objects.all()
@@ -56,10 +53,18 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
         return super().destroy(request, *args, **kwargs)
 
+    @extend_schema(
+        exclude=True)
+    def update(self, request, *args, **kwargs):
+        super().update(request, *args, **kwargs)
 
-@extend_schema_view(
-    update=extend_schema(exclude=True),
-    partial_update=extend_schema(exclude=True),
+    @extend_schema(
+        exclude=True)
+    def partial_update(self, request, *args, **kwargs):
+        super().partial_update(request, *args, **kwargs)
+
+
+@extend_schema(
     tags=['Wallets'],
     request=TransactionSerializer,
     responses={201: TransactionSerializer},
@@ -83,3 +88,13 @@ class WalletViewSet(viewsets.ModelViewSet):
             return JsonResponse({'detail': 'Permission denied.'}, status=403)
 
         return super().destroy(request, *args, **kwargs)
+
+    @extend_schema(
+    exclude=True)
+    def update(self, request, *args, **kwargs):
+        super().update(request, *args, **kwargs)
+
+    @extend_schema(
+    exclude=True)
+    def partial_update(self, request, *args, **kwargs):
+        super().partial_update(request, *args, **kwargs)

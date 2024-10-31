@@ -10,6 +10,9 @@ class Transaction(models.Model):
     def __str__(self):
         return self.txid
 
+    class Meta:
+        ordering = ['id']
+
 
 class Wallet(models.Model):
     label = models.CharField(max_length=255)
@@ -17,3 +20,6 @@ class Wallet(models.Model):
 
     def __str__(self):
         return self.label
+
+    class Meta:
+        ordering = ['id']
