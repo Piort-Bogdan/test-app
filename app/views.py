@@ -39,9 +39,10 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        # allows only staff users to delete transactions
+        # allows only staff users to delete transactions (commented to reduce features testing complexity)
+
         # if not request.user.is_staff:
-        #     return JsonResponse({'detail': 'Permission denied.'}, status=403)  # commented to reduce features testing complexity
+        #     return JsonResponse({'detail': 'Permission denied.'}, status=403)
 
         return super().destroy(request, *args, **kwargs)
 
@@ -83,9 +84,9 @@ class WalletViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        # allows only staff users to delete wallets
+        # allows only staff users to delete wallets (commented to reduce features testing complexity)
         # if not request.user.is_staff:
-        #     return JsonResponse({'detail': 'Permission denied.'}, status=403)  # commented to reduce features testing complexity
+        #     return JsonResponse({'detail': 'Permission denied.'}, status=403)
 
         return super().destroy(request, *args, **kwargs)
 
